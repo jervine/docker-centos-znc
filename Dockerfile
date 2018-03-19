@@ -8,3 +8,14 @@ ENV container docker
 RUN yum update -y
 RUN yum install -y epel-release
 RUN yum install -y znc; yum clean all; rm -rf /var/cache/yum
+
+ADD start.sh /sbin/start.sh
+ADD supervisord.conf /etc/supervisord.conf
+ADD znc.ini /etc/supervisord.d/znc.ini
+RUN chmod 755 /sbin/start/sh
+
+VOLUME /config
+
+EXPOSE 6667 8080
+
+ENTRYPOINT ["/sbin/start.sh"]
